@@ -55,21 +55,40 @@ describe("routes : topics", () => {
     };
 
     it("should create a new topic and redirect", (done) => {
-      request.post(options,
-        (err, res, body) => {
-          Topic.findOne({where: {title: "blink-182 songs"}})
-          .then((topic) => {
-            expect(res.statusCode).toBe(303);
-            expect(topic.title).toBe("blink-182 songs");
-            expect(topic.description).toBe("What's your favorite blink-182 song?");
-            done();
-          })
-          .catch((err) => {
-            console.log(err);
-            done();
-          });
+      request.post(options, (err, res, body) => {
+        Topic.findOne({where: {title: "blink-182 songs"}})
+        .then((topic) => {
+          expect(res.statusCode).toBe(303);
+          expect(topic.title).toBe("blink-182 songs");
+          expect(topic.description).toBe("What's your favorite blink-182 song?");
+          done();
+        })
+        .catch((err) => {
+          console.log(err);
+          done();
+        });
+      });
+    });
+
+    it("should not create a new topic that fails validations", (done) => {
+      const options = {
+        url: `${base}create`,
+        form: {
+          title: "c",
+          description: "d"
         }
-      );
+      };
+      request.post(options, (err, res, body) => {
+        Topic.findOne({where: {title: "c"}})
+        .then((topic) => {
+            expect(topic).toBeNull();
+            done();
+        })
+        .catch((err) => {
+          console.log(err);
+          done();
+        });
+      });
     });
   });
 
