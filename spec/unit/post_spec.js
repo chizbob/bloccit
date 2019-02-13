@@ -18,11 +18,11 @@ describe("Post", () => {
          this.user = user;
 
          Topic.create({
-           title: "Winter Games",
-           description: "Post your Winter Games stories.",
+           title: "Expeditions to Alpha Centauri",
+           description: "A compilation of reports from recent visits to the star system.",
            posts: [{
-             title: "Snowball Fighting",
-             body: "So much snow!",
+             title: "My first visit to Proxima Centauri b",
+             body: "I saw some rocks.",
              userId: this.user.id
            }]
          }, {
