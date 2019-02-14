@@ -80,7 +80,7 @@ describe("routes : posts", () => {
 
              Post.findOne({where: {title: "Watching snow melt"}})
              .then((post) => {
-               expect(post).not.toBeNull();
+               expect(post).toBeNull();
                done();
              })
              .catch((err) => {
@@ -235,7 +235,7 @@ describe("routes : posts", () => {
           Post.findById(1)
           .then((post)=>{
             expect(err).toBeNull()
-            expect(post).toBeNull()
+            expect(post).not.toBeNull()
             done()
           })
         })
@@ -262,9 +262,10 @@ describe("routes : posts", () => {
             body: "I love watching them melt slowly."
           }
         }, (err, res, body)=>{
-          expect(res.statusCode).toBe(302)
+          expect(res.statusCode).not.toBe(302)
           done()
           })
       });
     });
+});
 });
