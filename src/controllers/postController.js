@@ -30,6 +30,7 @@ module.exports = {
       });
     } else {
       req.flash("notice", "You're not authorized")
+      res.redirect("/posts")
     }
   },
 
