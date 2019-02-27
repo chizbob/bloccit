@@ -226,4 +226,65 @@ describe("Vote", () => {
         });
       });
     });
+    
+    describe("#getPoints()", ()=>{
+      it("should return the points of the votes", (done)=>{
+        Vote.create({
+          value: 1,
+          userId: this.user.id,
+          postId: this.user.id
+        })
+        .then((vote)=>{
+          let points = this.post.getPoints()
+          expect(points).toBe(1)
+          done()
+        })
+        .catch((err)=>{
+          console.log(err)
+          done()
+        })
+      })
+    })
+
+    describe("#hasUpvoteFor()", ()=>{
+      it("should return true if user has upvote", (done)=>{
+        Vote.create({
+          value: 1,
+          userId: this.user.id,
+          postId: this.post.id
+        })
+        .then((vote)=>{
+          vote.postId.hasUpvoteFor()
+          .then((associatedVote)=>{
+            expect(this.vote).toBe(true)
+            done()
+          })
+        })
+        .catch((err)=>{
+          console.log(err)
+          done()
+        })
+      })
+    })
+
+    describe("#hasDownvoteFor()", ()=>{
+      it("should return true if user has downvote", (done)=>{
+        Vote.create({
+          value: -1,
+          userId: this.user.id,
+          postId: this.post.id
+        })
+        .then((vote)=>{
+          vote.postId.hasDownvoteFor()
+          .then((associatedVote))=>{
+            expect(this.vote).toBe(true)
+            done()
+          })
+        })
+        .catch((err)=>{
+          console.log(err)
+          done()
+        })
+      })
+    })
 });
