@@ -10,52 +10,50 @@ const Favorite = require("../../src/db/models").Favorite;
 
 describe("routes : favorites", () => {
 
- beforeEach((done) => {
+  beforeEach((done) => {
 
-   this.user;
-   this.topic;
-   this.post;
+    this.user;
+    this.topic;
+    this.post;
 
-   sequelize.sync({force: true}).then((res) => {
-     User.create({
-       email: "starman@tesla.com",
-       password: "Trekkie4lyfe"
-     })
-     .then((res) => {
-       this.user = res;
+    sequelize.sync({force: true}).then((res) => {
+      User.create({
+        email: "starman@tesla.com",
+        password: "Trekkie4lyfe"
+      })
+      .then((res) => {
+        this.user = res;
 
-       Topic.create({
-         title: "Expeditions to Alpha Centauri",
-         description: "A compilation of reports from recent visits to the star system.",
-         posts: [{
-           title: "My first visit to Proxima Centauri b",
-           body: "I saw some rocks.",
-           userId: this.user.id
-         }]
-       }, {
-         include: {
-           model: Post,
-           as: "posts"
-         }
-       })
-       .then((res) => {
-         this.topic = res;
-         this.post = this.topic.posts[0];
-         done();
-       })
-       .catch((err) => {
-         console.log(err);
-         done();
-       });
-     });
-   });
- });
+        Topic.create({
+          title: "Expeditions to Alpha Centauri",
+          description: "A compilation of reports from recent visits to the star system.",
+          posts: [{
+            title: "My first visit to Proxima Centauri b",
+            body: "I saw some rocks.",
+            userId: this.user.id
+          }]
+        }, {
+          include: {
+            model: Post,
+            as: "posts"
+          }
+        })
+        .then((res) => {
+          this.topic = res;
+          this.post = this.topic.posts[0];
+          done();
+        })
+        .catch((err) => {
+          console.log(err);
+          done();
+        });
+      });
+    });
+  });
 
- //Guest User Context
+  describe("guest attempting to favorite on a post", () => {
 
- describe("guest attempting to favorite on a post", () => {
-
-    beforeEach((done) => {
+    beforeEach((done) => {    // before each suite in this context
 
       request.get({
         url: "http://localhost:3000/auth/fake",
@@ -87,34 +85,31 @@ describe("routes : favorites", () => {
             (err, res, body) => {
               Favorite.all()
               .then((favorite) => {
-                expect(favCountBeforeCreate).toBe(favorite.length);
+                expect(favCountBeforeCreate).toBe(favorite.length); // confirm no favorites created
                 done();
               })
               .catch((err) => {
                 console.log(err);
                 done();
               });
-            }
-          );
+            };
+          )
         });
       });
-
     });
-  }); //End Guest User Context
+  });
 
-  //Begin Signed In User Context
   describe("signed in user favoriting a post", () => {
 
-    beforeEach((done) => {
-      request.get({
+    beforeEach((done) => {  // before each suite in this context
+      request.get({         // mock authentication
         url: "http://localhost:3000/auth/fake",
         form: {
-          role: "member",
+          role: "member",     // mock authenticate as member user
           userId: this.user.id
         }
-      },
-        (err, res, body) => {
-          done();
+      },(err, res, body) => {
+         done();
         }
       );
     });
@@ -133,7 +128,7 @@ describe("routes : favorites", () => {
                 postId: this.post.id
               }
             })
-            .then((favorite) => {
+            .then((favorite) => {               // confirm that a favorite was created
               expect(favorite).not.toBeNull();
               expect(favorite.userId).toBe(this.user.id);
               expect(favorite.postId).toBe(this.post.id);
@@ -176,8 +171,5 @@ describe("routes : favorites", () => {
         });
       });
     });
-  });
-
-
 
 });

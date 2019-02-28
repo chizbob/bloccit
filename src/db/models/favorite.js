@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Favorite = sequelize.define('Favorite', {
+  var Favorite = sequelize.define("Favorite", {
     postId: {
       type: DataTypes.INTEGER,
       allowNull: false
@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
   }, {});
+
   Favorite.associate = function(models) {
+
     Favorite.belongsTo(models.Post, {
       foreignKey: "postId",
       onDelete: "CASCADE"
