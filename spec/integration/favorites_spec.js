@@ -63,9 +63,7 @@ describe("routes : favorites", () => {
       },
         (err, res, body) => {
           done();
-        }
-      );
-
+        });
     });
 
     describe("POST /topics/:topicId/posts/:postId/favorites/create", () => {
@@ -92,8 +90,7 @@ describe("routes : favorites", () => {
                 console.log(err);
                 done();
               });
-            };
-          )
+            });
         });
       });
     });
@@ -110,8 +107,7 @@ describe("routes : favorites", () => {
         }
       },(err, res, body) => {
          done();
-        }
-      );
+        });
     });
 
     describe("POST /topics/:topicId/posts/:postId/favorites/create", () => {
@@ -138,8 +134,7 @@ describe("routes : favorites", () => {
               console.log(err);
               done();
             });
-          }
-        );
+          });
       });
     });
 
@@ -158,18 +153,17 @@ describe("routes : favorites", () => {
             const favorite = favorites[0];
             favCountBeforeDelete = favorites.length;
 
-            request.post(`${base}${this.topic.id}/posts/${this.post.id}/favorites/${favorite.id}/destroy`,
+            request.post(`${base}${this.topic.id}/posts/${this.post.id}/favorites/${favorites.id}/destroy`,
               (err, res, body) => {
                 this.post.getFavorites()
                 .then((favorites) => {
                   expect(favorites.length).toBe(favCountBeforeDelete - 1);
                   done();
                 });
-              }
-            );
+              });
           });
         });
       });
     });
-
+  });
 });

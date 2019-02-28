@@ -21,8 +21,8 @@ module.exports = {
       include: [
         {model: Comment, as: "comments", include: [
           {model: User }
-           ]}, {model: Vote, as: "votes"}
-                 {model: Favorite, as: "favorites"}           
+        ]}, {model: Vote, as: "votes"},
+              {model: Favorite, as: "favorites"}           
         ]
     })
     .then((post) => {
