@@ -33,9 +33,9 @@ module.exports = {
       .then((user) => {
         callback(null, user);
       })
-      .catch((err =>{
+      .catch((err) =>{
         callback(err, user);
-      }))
+      })
 
     });
   }
