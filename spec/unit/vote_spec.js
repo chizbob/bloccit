@@ -226,7 +226,7 @@ describe("Vote", () => {
         });
       });
     });
-    
+
     describe("#getPoints()", ()=>{
       it("should return the points of the votes", (done)=>{
         Vote.create({
@@ -276,7 +276,7 @@ describe("Vote", () => {
         })
         .then((vote)=>{
           vote.postId.hasDownvoteFor()
-          .then((associatedVote))=>{
+          .then((associatedVote)=>{
             expect(this.vote).toBe(true)
             done()
           })
