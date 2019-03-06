@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   Favorite.associate = function(models) {
-
     Favorite.belongsTo(models.Post, {
       foreignKey: "postId",
       onDelete: "CASCADE"

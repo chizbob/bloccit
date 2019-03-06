@@ -60,10 +60,9 @@ describe("routes : favorites", () => {
         form: {
           userId: 0
         }
-      },
-        (err, res, body) => {
+      }, (err, res, body) => {
           done();
-        });
+         });
     });
 
     describe("POST /topics/:topicId/posts/:postId/favorites/create", () => {
@@ -152,12 +151,10 @@ describe("routes : favorites", () => {
               .then((favorites) => {
                 const favorite = favorites[0];
                 favCountBeforeDelete = favorites.length;
-                console.log("favorite", favorite)
-                request.post(`${base}${this.topic.id}/posts/${this.post.id}/favorites/${favorite.id}/destroy`,
+                request.post(`${base}${this.topic.id}/posts/${this.post.id}/favorites/${favorites.id}/destroy`,
                   (err, res, body) => {
                     this.post.getFavorites()
                     .then((favorites) => {
-                      console.log(this.post)
                       expect(favorites.length).toBe(favCountBeforeDelete - 1);
                       done();
                     })
