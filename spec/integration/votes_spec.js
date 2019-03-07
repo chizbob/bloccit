@@ -60,8 +60,7 @@ describe("routes : votes", () => {
         form: {
           userId: 0 // ensure no user in scope
         }
-      },
-        (err, res, body) => {
+      },(err, res, body) => {
           done();
         }
       );
@@ -103,8 +102,7 @@ describe("routes : votes", () => {
           role: "member",     // mock authenticate as member user
           userId: this.user.id
         }
-      },
-        (err, res, body) => {
+      },(err, res, body) => {
           done();
         }
       );
@@ -167,7 +165,5 @@ describe("routes : votes", () => {
           });
       });
     });
-
   });
-
 });
